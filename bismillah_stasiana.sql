@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 14, 2018 at 07:46 AM
+-- Generation Time: Dec 17, 2018 at 04:15 PM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -25,6 +25,58 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `bencana`
+--
+
+CREATE TABLE `bencana` (
+  `id_bencana` int(11) NOT NULL,
+  `nama_bencana` varchar(100) DEFAULT NULL,
+  `provinsi` varchar(50) DEFAULT NULL,
+  `kejadian` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `bencana`
+--
+
+INSERT INTO `bencana` (`id_bencana`, `nama_bencana`, `provinsi`, `kejadian`) VALUES
+(1, 'Aceh 1', 'Aceh', 35),
+(2, 'Sumatra 1', 'Sumatra Utara', 18),
+(3, 'Sumatra 2', 'Sumatra Barat', 25),
+(4, 'Riau 1', 'Riau', 24),
+(5, 'Jambi 1', 'Jambi', 7),
+(6, 'Sumatra 1', 'Sumatra Selatan', 51),
+(7, 'Bengkulu 1', 'Bengkulu', 4),
+(8, 'Lampung 1', 'Lampung', 15),
+(9, 'Kep. Bangka Belitung 1', 'Kep. Bangka Belitung', 6),
+(10, 'Riau 2', 'Kepulauan Riau', 4),
+(11, 'DKI 1', 'DKI Jakarta', 3),
+(12, 'Jawa 1', 'Jawa Barat', 163),
+(13, 'Jawa 2', 'Jawa Tengah', 315),
+(14, 'DIY 1', 'DI Yogyakarta', 7),
+(15, 'Jawa 3', 'Jawa Timur', 191),
+(16, 'Banten 1', 'Banten', 36),
+(17, 'Bali 1', 'Bali', 11),
+(18, 'NT 1', 'Nusa Tenggara Barat', 18),
+(19, 'NT 2', 'Nusa Tenggara Timur', 6),
+(20, 'Kalimantan 1', 'Kalimantan Barat', 9),
+(21, 'Kalimantan 2', 'Kalimantan Tengah', 25),
+(22, 'Kalimantan 3', 'Kalimantan Selatan', 37),
+(23, 'Kalimantan 4', 'Kalimantan Timur', 11),
+(24, 'Sulawesi 1', 'Sulawesi Utara', 14),
+(25, 'Sulawesi 2', 'Sulawesi Tengah', 4),
+(26, 'Sulawesi 3', 'Sulawesi Selatan', 46),
+(27, 'Sulawesi 4', 'Sulawesi Tenggara', 10),
+(28, 'Sulawesi 5', 'Gorontalo', 14),
+(29, 'Sulawesi 6', 'Sulawesi Barat', 7),
+(30, 'Maluku 1', 'Maluku', 2),
+(31, 'Maluku 2', 'Maluku Utara', 7),
+(32, 'Papua 1', 'Papua Barat', 3),
+(33, 'Papua 2', 'Papua', 9);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `laporan`
 --
 
@@ -37,16 +89,19 @@ CREATE TABLE `laporan` (
   `kecamatan` varchar(255) NOT NULL,
   `alamat_lengkap` varchar(255) NOT NULL,
   `deskripsi_bencana` varchar(255) NOT NULL,
-  `image` varchar(200) NOT NULL
+  `image` varchar(200) NOT NULL,
+  `status_bencana` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `laporan`
 --
 
-INSERT INTO `laporan` (`id_laporan`, `jenis_bencana`, `tanggal`, `provinces_name`, `regencies_name`, `kecamatan`, `alamat_lengkap`, `deskripsi_bencana`, `image`) VALUES
-(1, 'Longsor', '2018-12-13', 'Jawa Tengah', 'Temanggung', 'Tembarak', 'Kelurahan Wonokerso, Dusun Jaranan, RT01/RW11 ', 'pokoknya sering deh', ''),
-(2, 'Banjir', '2018-12-11', 'Daerah Istimewa Yogyakarta', 'Sleman', 'Ngaglik', 'Jl. Kaliurang km. 13,5', 'Seringggggggggggggg pollllllllll', '');
+INSERT INTO `laporan` (`id_laporan`, `jenis_bencana`, `tanggal`, `provinces_name`, `regencies_name`, `kecamatan`, `alamat_lengkap`, `deskripsi_bencana`, `image`, `status_bencana`) VALUES
+(12, 'Tsunami', '2004-01-01', 'Nanggroe Aceh Darussalam', 'Aceh', 'Aceh', 'Jl. Kedondong no 9, kode pos: 290283	', 'ya gitu lah ', 'square-tsunami.jpg', ''),
+(13, 'Banjir', '2015-02-03', 'Nanggroe Aceh Darussalam', 'Aceh', 'Aceh', 'Jl. Kedondong no 9, kode pos: 290283	', 'ksjdgakrhaf', 'square-flood.png', ''),
+(14, 'Gunung Meletus', '2016-09-02', 'Jawa Timur', 'Malang', 'Lupa', 'disituuu hehe', 'yagitu deeeh', 'photo-1506467493604-25d7861a6703.jpg', ''),
+(15, 'Gempa Bumi', '2001-02-02', 'Dimana tebak', 'Disinii', 'sama qm', 'ehehehehehe', 'wkwkwkwkwkw', 'earthquake.jpg', '');
 
 -- --------------------------------------------------------
 
@@ -634,6 +689,37 @@ INSERT INTO `regencies` (`id`, `province_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `status_admin`
+--
+
+CREATE TABLE `status_admin` (
+  `id` int(5) NOT NULL,
+  `tanggal_laporan` date NOT NULL,
+  `jenis_bencana` varchar(30) NOT NULL,
+  `provinsi` varchar(30) NOT NULL,
+  `kota_kabupaten` varchar(30) NOT NULL,
+  `status` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `status_admin`
+--
+
+INSERT INTO `status_admin` (`id`, `tanggal_laporan`, `jenis_bencana`, `provinsi`, `kota_kabupaten`, `status`) VALUES
+(1, '2018-01-01', 'Tanah Longsor', 'JAWA TENGAH', 'SEMARANG', 'Rawan'),
+(2, '2018-03-28', 'Tanah Longsor', 'JAWA TENGAH', 'SEMARANG', 'Rawan'),
+(3, '2018-05-22', 'Tanah Longsor', 'JAWA TENGAH', 'SEMARANG', 'Rawan'),
+(4, '2018-08-17', 'Gunung Berapi', 'Daerah Istimewa Yogyakarta', 'Sleman', 'Waspada'),
+(5, '2018-02-03', 'Tsunami', 'Aceh', 'Lhokseumawe', 'Aman'),
+(6, '2018-11-30', 'Gempa Bumi', 'Daerah Istimewa Yogyakarta', 'Kulon Progo', 'Rawan'),
+(7, '2018-12-07', 'Gempa Bumi', 'Banten', 'Lebak Banten', 'Aman'),
+(9, '2018-11-30', 'Gempa Bumi', 'Daerah Istimewa Yogyakarta', 'Gunung Kidul', 'Aman'),
+(10, '2018-12-15', 'banjir', 'Daerah Khusus Ibukota', 'Jakarta Selatan', 'terkendali'),
+(11, '2018-12-16', 'Gunung  Berapi', 'Sumatra Utara', 'Minahasa Tenggara', 'siaga');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tb_user`
 --
 
@@ -677,6 +763,12 @@ ALTER TABLE `regencies`
   ADD KEY `regencies_province_id_index` (`province_id`);
 
 --
+-- Indexes for table `status_admin`
+--
+ALTER TABLE `status_admin`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tb_user`
 --
 ALTER TABLE `tb_user`
@@ -690,7 +782,13 @@ ALTER TABLE `tb_user`
 -- AUTO_INCREMENT for table `laporan`
 --
 ALTER TABLE `laporan`
-  MODIFY `id_laporan` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_laporan` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `status_admin`
+--
+ALTER TABLE `status_admin`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tb_user`
