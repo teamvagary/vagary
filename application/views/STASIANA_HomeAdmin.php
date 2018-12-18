@@ -8,7 +8,7 @@
   <meta content="" name="description">
 
   <!-- Favicons -->
-  <link href="asset/img/logoutama.png" rel="icon">
+  <link href="<?php echo base_url("asset/img/logojadi.png")?>" rel="icon">
   <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -43,23 +43,28 @@
     <div class="container">
 
       <div id="logo" class="pull-left">
-        <h1><a href="#intro" class="scrollto">STASIANA</a></h1>
+        <h1><a href="<?php echo base_url ("index.php/STASIANA_ControllerAdmin") ?>" class="scrollto">STASIANA</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="#intro"><img src="img/logo.png" alt="" title=""></a> -->
+        <!-- <a href="#intro"><img src="<?php echo base_url ("asset/img/jisoo.jpg")?>" alt="" title=""></a>-->
       </div>
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
-          <li class="menu-active"><a href="#intro">Home</a></li>
-          <li><a href="#DataLaporan">Data Laporan</a></li>
-          <li class="menu-has-children"><a href="">Data</a>
+          <li class="menu-active"><a href="<?php echo base_url ("index.php/STASIANA_ControllerAdmin") ?>">Home</a></li>
+          <li><a href=#DataLaporan >Data</a></li>
+          <li class="menu-has-children"><a href="">Validasi</a>
             <ul>
-              <li><a href="">Buat Rekapitulasi</a></li>
-              <li><a href="#">Ubah Status</a></li>
-              <li><a href="#">Validasi</a></li>
+              <li><a href="<?php echo base_url ("index.php/STASIANA_ControllerAdmin/rekapitulasi") ?>"> Rekapitulasi</a></li>
+              <li><a href="<?php echo base_url ("index.php/STASIANA_ControllerAdmin/Edit") ?>">Ubah Status</a></li>
             </ul>
           </li>
-          <li><a href="">Kontak</a></li>
+          <li class="nav-user dropdown"><a href="#" data-toggle="dropdown">
+            <img class="nav-avatar" src="<?php echo base_url("asset/img/user.png")?>"/>
+              <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="<?php echo base_url("index.php/STASIANA_ControllerMasyarakat/logout")?>">Logout</a></li>
+              </ul>
+          </li>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
@@ -94,38 +99,41 @@
 
         <div class="row" style="margin-top: 7px">
 
-
+          <center>
           <div class="col-lg-11 content wow fadeInRight" style="margin-left: 20px">
+            <center>
             <table border="1">
                 <tr>
-                  <th>ID</th>
-                  <th>Tanggal</th>
-                  <th>Jenis Bencana</th>
-                  <th>Provinsi</th>
-                  <th>Kota/Kabupaten</th>
-                  <th>Kecamatan</th>
-                  <th>Alamat Lengkap</th>
-                  <th>Deskripsi Bencana</th>
-                  <th>Gambar Bencana</th>
+                  <th width="30">ID</th>
+                  <th width="50">Tanggal</th>
+                  <th width="50">Jenis Bencana</th>
+                  <th width="50">Provinsi</th>
+                  <th width="50">Kota/Kabupaten</th>
+                  <th width="50">Kecamatan</th>
+                  <th width="50">Alamat Lengkap</th>
+                  <th width="50">Deskripsi Bencana</th>
+                  <th width="50">Gambar Bencana</th>
                 </tr>
                 <?php 
-                $id = 1;
+                $id_laporan = 1;
                 foreach($laporan as $l){ 
-                ?>
-                <tr>
-                  <td><?php echo $id++ ?></td>
-                  <td><?php echo $l->tanggal ?></td>
-                  <td><?php echo $l->jenis_bencana ?></td>
-                  <td><?php echo $l->provinces_name ?></td>
-                  <td><?php echo $l->regencies_name ?></td>
-                  <td><?php echo $l->kecamatan ?></td>
-                  <td><?php echo $l->alamat_lengkap ?></td>
-                  <td><?php echo $l->deskripsi_bencana ?></td>
-                  <td><?php echo $l->image ?></td>
-                </tr>
-                <?php } ?>
+                
+                echo "<tr>";
+                    echo "<td>" .$id_laporan++; "</td>";
+                    echo "<td>" .$l->tanggal. "</td>";
+                    echo "<td>" .$l->jenis_bencana. "</td>";
+                    echo "<td>" .$l->provinces_name. "</td>";
+                    echo "<td>" .$l->regencies_name. "</td>";
+                    echo "<td>" .$l->kecamatan. "</td>";
+                    echo "<td>" .$l->alamat_lengkap. "</td>";
+                    echo "<td>" .$l->deskripsi_bencana. "</td>";
+                    echo "<td><img src='".base_url("asset/img/" .$l->image)."' width='100' height='100'></td>";
+               echo "</tr>";
+                } ?>
               </table>
+              </center>
       </div>
+      </center>
       </div>
     </section><!-- #about -->
 
@@ -133,56 +141,7 @@
     <!--==========================
       Our Team Section
     ============================-->
-    <section id="team" class="section-bg">
-      <div class="container">
-        <div class="section-header">
-          <h3 class="section-title">Our Team</h3>
-          <span class="section-divider"></span>
-          <p class="section-description">
-            "Coming together is a beginning. Keeping together is progress. Working together is success." <br> 
-            ㅡHenry Ford
-        </p>
-        </div>
-        <div class="row wow fadeInUp">
-          <div class="col-lg-4 col-md-6">
-            <div class="member">
-              <div class="pic"><img src="<?php echo base_url("asset/img/square-ajeng.jpg")?>" style="width: 350px; height: 350px" alt=""></div>
-              <h4>Ajengsari Rahmayanti</h4>
-              <span>17523106</span>
-              <div class="social">
-                <a href="https://querencias.weebly.com"><i>Blog</i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6">
-            <div class="member">
-              <div class="pic"><img src="<?php echo base_url("asset/img/lisa-square.png")?>" style="width: 350px; height: 350px"  alt=""></div>
-              <h4>Rezky Ayu Wulandari</h4>
-              <span>17523100</span>
-              <div class="social">
-                <a href=""><i class="fa fa-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6">
-            <div class="member">
-              <div class="pic"><img src="<?php echo base_url("asset/img/jisoo-square.jpg")?>" style="width: 350px; height: 350px"  alt=""></div>
-              <h4>Qonita Alimatu Yassaroh</h4>
-              <span>17523107</span>
-              <div class="social">
-                <a href=""><i class="fa fa-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section><!-- #team -->
-
+    
   </main>
 
   <!--==========================
