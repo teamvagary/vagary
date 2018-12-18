@@ -8,9 +8,7 @@
   <meta content="" name="description">
 
   <!-- Favicons -->
-  <link href="asset/img/logoutama.png" rel="icon">
-  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
-
+   <link href="<?php echo base_url("asset/img/logojadi.png")?>" rel="icon">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700|Open+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
 
@@ -43,23 +41,25 @@
     <div class="container">
 
       <div id="logo" class="pull-left">
-        <h1><a href="#intro" class="scrollto">STASIANA</a></h1>
+        <h1><a href="<?php echo base_url ("index.php/STASIANA_ControllerMasyarakat") ?>" class="scrollto">STASIANA</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="#intro"><img src="img/logo.png" alt="" title=""></a> -->
       </div>
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
-          <li class="menu-active"><a href="#intro">Home</a></li>
-          <li><a href="#informasi">Informasi</a></li>
-          <li><a href="<?php echo ("STASIANA_ControllerMasyarakat/laporkan") ?>">Laporkan Lokasi</a></li>
-          <li class="menu-has-children"><a href="">Data</a>
-            <ul>
-              <li><a href="">Rekapitulasi</a></li>
-              <li><a href="#">Status</a></li>
-            </ul>
+          <li class="menu-active"><a href="<?php echo base_url ("index.php/STASIANA_ControllerMasyarakat") ?>">Home</a></li>
+          <li><a href="STASIANA_ControllerMasyarakat#informasi">Informasi</a></li>
+          <li><a href="<?php echo base_url ("index.php/STASIANA_ControllerMasyarakat/laporkan") ?>">Laporkan Lokasi</a></li>
+          <li><a href="<?php echo base_url("index.php/STASIANA_ControllerMasyarakat/kontak")?>">Kontak</a></li>
+          <li class="nav-user dropdown"><a href="#" data-toggle="dropdown">
+            <img class="nav-avatar" src="<?php echo base_url("asset/img/user.png")?>"/>
+              <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="<?php echo base_url("index.php/STASIANA_ControllerMasyarakat/logout")?>">Logout</a></li>
+              </ul>
           </li>
-          <li><a href="">Kontak</a></li>
+
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
@@ -81,7 +81,7 @@
   <main id="main">
 
     <!--==========================
-      About Us Section
+      Berita Section
     ============================-->
     <section id="about" class="section-bg">
       <div class="container-fluid">
@@ -93,46 +93,26 @@
           <div class="col-lg-10 content wow fadeInRight" style="margin-left: 20px">
             <div class="row">
 
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
-            <a href="#"><img src="<?php echo base_url('asset/img/square-tsunami.jpg')?>" class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a>Tsunami</a>
-              </h4>
-              <p class="card-text" style="font-style: italic;">Lokasi: Jl. Kedondong no. 14 </p>
-                <p>Terjadi banjir sebanyak tiga kali di 2 tahun terakhir ini. </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
-            <a href="#"><img src="<?php echo base_url('asset/img/square-flood.png')?>" class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a>Banjir</a>
-              </h4>
-              <p class="card-text" style="font-style: italic;">Lokasi: Jl. Kedondong no. 14 </p>
-                <p>Terjadi banjir sebanyak tiga kali di 2 tahun terakhir ini. </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-          <div class="card h-100">
-            <a href="#"><img src="<?php echo base_url('asset/img/square-earthquake.jpg')?>" class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-            <div class="card-body">
-              <h4 class="card-title">
-                <a>Gempa Bumi</a>
-              </h4>
-              <p class="card-text" style="font-style: italic;">Lokasi: Jl. Kedondong no. 14 </p>
-                <p>Terjadi gempa sebanyak tiga kali di 2 tahun terakhir ini.  </p>
-            </div>
-          </div>
-        </div>
-      </div>
-        
+<table>
+  <?php 
+      $id = 1;
+      foreach ($laporan as $l){  
+  echo"<tr>";
+    echo "<div class='col-lg-4 col-sm-6 portfolio-item' style='margin-bottom: 25px'>";
+          echo "<div class='card h-100'>";
+             echo "<a><img src='".base_url("asset/img/" .$l->image)."' width='374' height='374'></a>";
+            echo "<div class='card-body'>";
+              echo "<h4 class='card-title'>";
+                 echo "<a>" .$l->jenis_bencana. "</a>";
+              echo "</h4>";
+              echo "<p class='card-text' style='font-style: italic;'>" .$l->alamat_lengkap. "</td>";
+              echo "<p>" .$l->deskripsi_bencana. "</p>";
+            echo "</div>";
+          echo "</div>";
+       echo "</div>";
+  echo "</tr>";
+  }?>
+</table>
          <ul class="col-lg-12 col-sm-6 pagination justify-content-center" style="margin-top: 20px">
         <li class="page-item">
           <a class="page-link" href="#" aria-label="Previous">
@@ -141,13 +121,9 @@
           </a>
         </li>
         <li class="page-item">
-          <a class="page-link" href="#">1</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">3</a>
+          <a class="page-link">
+            1<?php echo $this->pagination->create_links(); ?>
+          </a>
         </li>
         <li class="page-item">
           <a class="page-link" href="#" aria-label="Next">
@@ -156,7 +132,6 @@
           </a>
         </li>
       </ul>
-
       </div>
       </center>
       </div>
@@ -190,22 +165,22 @@
 
           <div class="col-lg-4 col-md-6">
             <div class="member">
-              <div class="pic"><img src="<?php echo base_url("asset/img/lisa-square.png")?>" style="width: 350px; height: 350px"  alt=""></div>
+              <div class="pic"><img src="<?php echo base_url("asset/img/square-ayu2.jpg")?>" style="width: 350px; height: 350px"  alt=""></div>
               <h4>Rezky Ayu Wulandari</h4>
               <span>17523100</span>
               <div class="social">
-                <a href=""><i class="fa fa-linkedin"></i></a>
+                <a href="https://rzkyayuwulandari.blogspot.com"><i>Blog</i></a>
               </div>
             </div>
           </div>
 
           <div class="col-lg-4 col-md-6">
             <div class="member">
-              <div class="pic"><img src="<?php echo base_url("asset/img/jisoo-square.jpg")?>" style="width: 350px; height: 350px"  alt=""></div>
+              <div class="pic"><img src="<?php echo base_url("asset/img/square-qonita.jpg")?>" style="width: 350px; height: 350px"  alt=""></div>
               <h4>Qonita Alimatu Yassaroh</h4>
               <span>17523107</span>
               <div class="social">
-                <a href=""><i class="fa fa-linkedin"></i></a>
+                <a href="https://qonitaalimatu.blogspot.com"><i>Blog</i></a>
               </div>
             </div>
           </div>
