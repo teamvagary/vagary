@@ -1,58 +1,32 @@
 <?php
 
-class STASIANA_ControllerMasyarakat extends CI_Controller{
+class STASIANA_ControllerAdmin extends CI_Controller{
  
 	function __construct(){
 		parent::__construct();		
 		$this->load->model('STASIANA_Model');
+
  
 	}
  
 	function index(){
-		$data['laporan'] = $this->STASIANA_Model->laporan()->result();
-		$this->load->view('STASIANA_HomeMasyarakat.php', $data);
+		if(!$this->session->userdata('level')){
+			redirect('STASIANA_Login');
+		}else{
+			$data['laporan'] = $this->STASIANA_Model->tampil()->result();
+			$this->load->view('STASIANA_HomeAdmin.php',$data);
+		}
+		
 	}
 
-
-	function laporkan(){
-		$this->load->view('STASIANA_FormLaporan.php');
+	function Edit($id_laporan){
+		$where = array('id_laporan' => $id_laporan);
+	    $data['laporan'] = $this->STASIANA_Model->edit_data($where,'laporan')->result();
+	    $this->load->view('STASIANA_EditForm',$data);
 	}
 
-	function laporan(){
-		$id_laporan = $this->input->post('id_laporan');
-		$jenis_bencana = $this->input->post('jenis_bencana');
-	    $alamat_lengkap = $this->input->post('alamat_lengkap');
-	    $deskripsi_bencana = $this->input->post('deskripsi_bencana');
-		$data['laporan'] = $this->STASIANA_Model->laporan(array(
-	 		'id_laporan' => $id_laporan,
-			'jenis_bencana' => $jenis_bencana,
-			'alamat_lengkap' => $alamat_lengkap,
-			'deskripsi_bencana' => $deskripsi_bencana)
-		)->result();
-		$this->load->view('STASIANA_HomeAdmin.php',$data);
-	}
-
-	function upload_gambar(){
-		 $data = array();
-	    
-	    if($this->input->post('submit')){ // Jika user menekan tombol Submit (Simpan) pada form
-	      // lakukan upload file dengan memanggil function upload yang ada di GambarModel.php
-	      $upload = $this->STASIANA_Model->upload();
-	      
-	      if($upload['result'] == "success"){ // Jika proses upload sukses
-	         // Panggil function save yang ada di GambarModel.php untuk menyimpan data ke database
-	    	$this->load->view('STASIANA_ControllerMasyarakat/index');
-	      }else{ // Jika proses upload gagal
-	        $data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
-	      }
-	    }
-	}
-	    
-	  
-
-	function melaporkan(){
-
-		$id_laporan = $this->input->post('id_laporan');
+	function update(){
+	  	$id_laporan = $this->input->post('id_laporan');
 		$jenis_bencana = $this->input->post('jenis_bencana');
 	    $tanggal = $this->input->post('tanggal');
 	    $provinces_name = $this->input->post('provinces_name');
@@ -61,9 +35,9 @@ class STASIANA_ControllerMasyarakat extends CI_Controller{
 	    $alamat_lengkap = $this->input->post('alamat_lengkap');
 	    $deskripsi_bencana = $this->input->post('deskripsi_bencana');
 	    $image = $this->input->post('image');
+	    $status_bencana = $this->input->post('status_bencana');
 
-	      $data = array(
-	      'id_laporan' => $id_laporan,
+	  $data = array(
 	      'jenis_bencana' => $jenis_bencana,
 	      'tanggal' => $tanggal,
 	      'provinces_name' => $provinces_name,
@@ -71,27 +45,24 @@ class STASIANA_ControllerMasyarakat extends CI_Controller{
 	      'kecamatan' => $kecamatan,
 	      'alamat_lengkap' => $alamat_lengkap,
 	      'deskripsi_bencana' => $deskripsi_bencana,
-	      'image' => $image
+	      'image' => $image,
+	      'status_bencana' => $status_bencana
+	      
 	       );
 
-
-    $this->STASIANA_Model->laporkan($data,'laporan');
-
-    redirect('STASIANA_ControllerMasyarakat/index');
-
-	}
-
-
-	function status(){
-		$this->load->view('STASIANA_Status.php');
-		
+	  $where = array(
+	    'id_laporan' => $id_laporan
+	  );
+	 
+	  $this->STASIANA_Model->update_data($where,$data,'buku');
+	  redirect('STASIANA_ControllerAdmin/index');
 	}
 
 	function rekapitulasi(){
-		$this->load->view('STASIANA_Rekapitulasi.php');
-		
+		$x['rekap']=$this->STASIANA_Model->get_data_kejadian();
+		$this->load->view('STASIANA_Rekapitulasi.php',$x);
 	}
-
+	
 	function logout(){
 		$this->session->sess_destroy();
 		redirect('login');
